@@ -16,7 +16,7 @@ class Admin extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('admin.auth.login');
+            return route('admin.login');
         }
     }
 }

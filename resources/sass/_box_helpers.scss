@@ -1,0 +1,151 @@
+$max_height: 100;
+
+@mixin min-vh-list {
+    /**-- Minimum View Heights --*/
+    @for $i from 1 through $max_height{
+        .min-vh-#{$i} {
+            min-height: #{$i}vh;
+        }
+    }
+}
+
+@mixin max-vh-list {
+    /**-- Maximum View Heights --*/
+    @for $i from 1 through $max_height{
+        .max-vh-#{$i} {
+            max-height: #{$i}vh;
+        }
+    }
+}
+
+@mixin min-vw-list {
+    /**-- Minimum View Widths --*/
+    @for $i from 1 through $max_height{
+        .min-vw-#{$i} {
+            min-width: #{$i}vh;
+        }
+    }
+}
+
+@mixin max-vw-list {
+    /**-- Maximum View Widths --*/
+    @for $i from 1 through $max_height{
+        .max-vw-#{$i} {
+            max-width: #{$i}vh;
+        }
+    }
+}
+
+@mixin p-v-list {
+    /**-- Padding View Heights --*/
+    @for $i from 1 through $max_height{
+        .p-v-#{$i} {
+            padding: #{$i}vh #{$i}vw #{$i}vh #{$i}vw;
+        }
+    }
+}
+
+
+@mixin pt-vh-list {
+    /**-- Padding top View Heights --*/
+    @for $i from 1 through $max_height{
+        .pt-vh-#{$i} {
+            padding-top: #{$i}vh;
+        }
+    }
+}
+
+@mixin pb-vh-list {
+    /**-- Padding bottom View Heights --*/
+    @for $i from 1 through $max_height{
+        .pb-vh-#{$i} {
+            padding-bottom: #{$i}vh;
+        }
+    }
+}
+
+
+@mixin pl-vw-list {
+    /**-- Padding left View Widths --*/
+    @for $i from 1 through $max_height{
+        .pl-vw-#{$i} {
+            padding-left: #{$i}vw;
+        }
+    }
+}
+
+@mixin pr-vw-list {
+    /**-- Padding right View Widths --*/
+    @for $i from 1 through $max_height{
+        .pr-vw-#{$i} {
+            padding-right: #{$i}vw;
+        }
+    }
+}
+
+
+@mixin m-v-list {
+    /**-- Margin Views --*/
+    @for $i from 1 through $max_height{
+        .m-v-#{$i} {
+            margin: #{$i}vh #{$i}vw #{$i}vh #{$i}vw;
+        }
+    }
+}
+
+@mixin mt-vh-list {
+    /**-- Margin top View Heights --*/
+    @for $i from 1 through $max_height{
+        .mt-vh-#{$i} {
+            margin-top: #{$i}vh;
+        }
+    }
+}
+
+
+@mixin mb-vh-list {
+    /**-- Margin bottom View Heights --*/
+    @for $i from 1 through $max_height{
+        .mb-vh-#{$i} {
+            margin-bottom: #{$i}vh;
+        }
+    }
+}
+
+
+@mixin ml-vw-list {
+    /**-- Margin left View Widths --*/
+    @for $i from 1 through $max_height{
+        .ml-vh-#{$i} {
+            margin-left: #{$i}vw;
+        }
+    }
+}
+
+@mixin mr-vw-list {
+    /**-- Margin right View Widths --*/
+    @for $i from 1 through $max_height{
+        .mr-vh-#{$i} {
+            margin-right: #{$i}vw;
+        }
+    }
+}
+
+
+@include min-vh-list;
+@include max-vh-list;
+@include min-vw-list;
+@include max-vw-list;
+
+@include p-v-list;
+@include pt-vh-list;
+@include pb-vh-list;
+@include pl-vw-list;
+@include pr-vw-list;
+
+@include m-v-list;
+@include mt-vh-list;
+@include mb-vh-list;
+@include ml-vw-list;
+@include mr-vw-list;
+
