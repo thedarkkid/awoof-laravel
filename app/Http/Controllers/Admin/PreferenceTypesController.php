@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Preference;
+use App\Models\PreferenceType;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
-class StoreController extends Controller
+class PreferenceTypesController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,29 +25,32 @@ class StoreController extends Controller
 
 
     /**
-     * Show the store listing page.
+     * Show the preference listing page.
      *
      * @return Renderable
      */
     public function index()
     {
-        return view("admin.preferences.stores.home");
+        $preference_types = PreferenceType::paginate(15);
+
+        return view("admin.preferences.types.home")
+            ->with('preferences', $preference_types);
     }
 
 
     /**
-     * Show the form for creating a new store.
+     * Show the form for creating a new preference.
      *
      * @return Factory|Response|View
      */
     public function create()
     {
-        return view("admin.preferences.stores.create");
+        return view("admin.preferences.types.create");
     }
 
 
     /**
-     * Store a newly created store to storage.
+     * Store a new preference to storage.
      *
      * @param Request $request
      * @return Response
@@ -57,19 +62,19 @@ class StoreController extends Controller
 
 
     /**
-     * Show the form for editing the store
+     * Show the form for editing the preference
      *
      * @param  int  $id
      * @return Factory|Response|View
      */
     public function edit($id)
     {
-        return view("admin.preferences.stores.edit");
+        return view("admin.preferences.types.edit");
     }
 
 
     /**
-     * Update the specified store to storage.
+     * Update the specified preference to storage.
      *
      * @param Request $request
      * @param  int  $id
@@ -82,7 +87,7 @@ class StoreController extends Controller
 
 
     /**
-     * Remove the specified store from storage.
+     * Remove the specified preference from storage.
      *
      * @param  int  $id
      * @return Response

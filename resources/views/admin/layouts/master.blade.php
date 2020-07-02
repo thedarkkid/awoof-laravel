@@ -41,6 +41,7 @@
                 </div>
             </div>
             <div class="container-fluid">
+                @include('admin.layouts.flash-message')
                 @yield('content')
             </div>
         </section>

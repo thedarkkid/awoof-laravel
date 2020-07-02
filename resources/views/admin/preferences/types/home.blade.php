@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title', 'Stores')
+@section('title', 'Preference')
 @section('parentPageTitle', 'App')
 @section('page-style')
     <link rel="stylesheet" href="{{asset('assets/plugins/footable-bootstrap/css/footable.bootstrap.min.css')}}" />
@@ -8,7 +8,7 @@
 @section('content')
     <div class="row clearfix">
         <div class="col-lg-12 align-right pr-5">
-            <a href="{{route('preferences.stores.create')}}" class="btn btn-primary btn-sm text-uppercase"><i class="zmdi zmdi-plus"></i> Add New</a>
+            <a href="{{route('preferences.shopping_priorities.create')}}" class="btn btn-primary btn-sm text-uppercase"><i class="zmdi zmdi-plus"></i> Add New</a>
         </div>
         <div class="col-lg-12">
             <div class="card">
@@ -17,7 +17,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Store</th>
+                            <th>Preference</th>
                             <th data-breakpoints="xs sm md">Created by</th>
                             <th data-breakpoints="xs">Action</th>
                         </tr>

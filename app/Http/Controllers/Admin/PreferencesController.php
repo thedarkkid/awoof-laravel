@@ -3,80 +3,92 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Preference;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class PreferencesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Create a new controller instance.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware("admin");
+    }
+
+
+    /**
+     * Show the preference listing page.
+     *
+     * @return Renderable
      */
     public function index()
     {
-        //
+        $preferences = Preference::all();
+        return view("admin.preferences.base.home")
+            ->with('preferences', $preferences);
     }
 
+
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new preference.
      *
-     * @return \Illuminate\Http\Response
+     * @return Factory|Response|View
      */
     public function create()
     {
-        //
+        return view("admin.preferences.base.create");
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * Store a new preference to storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the preference
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Factory|Response|View
      */
     public function edit($id)
     {
-        //
+        return view("admin.preferences.base.edit");
     }
 
+
     /**
-     * Update the specified resource in storage.
+     * Update the specified preference to storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
         //
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified preference from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

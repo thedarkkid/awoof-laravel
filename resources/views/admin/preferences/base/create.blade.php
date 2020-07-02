@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title', 'Stores')
+@section('title', 'Preferences')
 @section('parentPageTitle', 'App')
 @section('page-style')
     <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}"/>
@@ -11,7 +11,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="header">
-                    <h2><strong>New</strong> Store</h2>
+                    <h2><strong>New</strong> Preference</h2>
                 </div>
                 <div class="body">
                     <form id="form_advanced_validation" method="POST">
