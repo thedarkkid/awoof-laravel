@@ -6,18 +6,20 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-select/css/bootstrap-select.css')}}"/>
 @stop
 @section('content')
-    <!-- Advanced Validation -->
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row justify-content-center clearfix">
+        <div class="  col-lg-6 col-md-12 col-sm-12">
             <div class="card">
                 <div class="header">
                     <h2><strong>New</strong> Preference Type</h2>
                 </div>
                 <div class="body">
-                    <form id="form_advanced_validation" method="POST">
+                    <form id="form_advanced_validation" method="POST" action="{{ route('preferences.types.store') }}">
+                        @csrf
                         <div class="form-group form-float">
-                            <input type="text" class="form-control" name="minmaxlength" maxlength="10" minlength="3" required>
-                            <div class="help-info">Min. 3, Max. 10 characters</div>
+                            <input type="text" class="form-control" name="name" placeholder="Preference Type Name" required>
+                            @if ( $errors->has('name') )
+                                <p class="text-danger">{{ $errors->first('name') }}</p>
+                            @endif
                         </div>
                         <button class="btn btn-raised btn-primary waves-effect text-uppercase" type="submit">Create</button>
                     </form>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class PreferenceType extends Model
 {
     protected $table = 'preference_types';
+    protected $guarded = [];
 
     /**
      * return relation with the preferences table
