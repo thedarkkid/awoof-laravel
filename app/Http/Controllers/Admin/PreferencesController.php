@@ -12,9 +12,7 @@ use Illuminate\View\View;
 
 class PreferencesController extends Controller
 {
-    //Todo implement users CRUD admin panel
-    //Todo implement user preferences crud admin panel
-    //Todo implement pagination properly admin
+
     /**
      * Create a new controller instance.
      *

@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    //Todo implement users CRUD on admin panel
+    //Todo implement user preferences crud on admin panel
+    //Todo implement pagination properly on admin
+    //Todo add users page on admin panel
+
     /**
      * Create a new controller instance.
      *
