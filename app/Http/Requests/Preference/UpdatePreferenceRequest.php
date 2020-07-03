@@ -13,7 +13,7 @@ class UpdatePreferenceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdatePreferenceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "preference_type_id" => "integer|required",
+            "name" => "string|required"
         ];
     }
 }

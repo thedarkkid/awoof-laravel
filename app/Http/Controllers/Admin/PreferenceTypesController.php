@@ -7,12 +7,9 @@ use App\Http\Requests\PreferenceType\StorePreferenceTypeRequest;
 use App\Http\Requests\PreferenceType\UpdatePreferenceTypeRequest;
 use App\Models\PreferenceType;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\View\View;
 
 class PreferenceTypesController extends Controller
 {
@@ -28,34 +25,24 @@ class PreferenceTypesController extends Controller
 
 
     /**
-     * Show the preference listing page.
+     * Show a listing of preference types page.
      *
      * @return Renderable
      */
     public function index()
     {
-        $preference_types = PreferenceType::paginate(15);
+        $preference_types = PreferenceType::orderBy('id', 'DESC')
+        ->paginate(7);
 
-        return view("admin.preferences.types.home")
+        return view("admin.preferences.types")
             ->with('preference_types', $preference_types);
     }
 
 
     /**
-     * Show the form for creating a new preference.
+     * Store a new preference type to storage.
      *
-     * @return Factory|Response|View
-     */
-    public function create()
-    {
-        return view("admin.preferences.types.create");
-    }
-
-
-    /**
-     * Store a new preference to storage.
-     *
-     * @param Request $request
+     * @param StorePreferenceTypeRequest $request
      * @return RedirectResponse|Response
      */
     public function store(StorePreferenceTypeRequest $request)
@@ -70,16 +57,16 @@ class PreferenceTypesController extends Controller
         $preference_type = new PreferenceType($validated);
         $preference_type->save();
 
-        session()->flash('status', ['success', 'New preference type '.$preference_type->name.' has been created']);
+        session()->flash('_status', ['success', 'New preference type '.$preference_type->name.' has been created']);
         return redirect()->back();
     }
 
 
     /**
-     * Update the specified preference to storage.
+     * Update the specified preference type to storage.
      *
-     * @param Request $request
-     * @param  int  $id
+     * @param UpdatePreferenceTypeRequest $request
+     * @param int $id
      * @return RedirectResponse|Response
      */
     public function update(UpdatePreferenceTypeRequest $request, $id)
@@ -95,23 +82,23 @@ class PreferenceTypesController extends Controller
             $old_name = $preference_type->name;
         }catch (ModelNotFoundException $e){
             // show failure
-            session()->flash('status', ['error', "Preference type with id ".$id." was not found"]);
+            session()->flash('_status', ['error', "Preference type with id ".$id." was not found"]);
             return redirect()->back();
 
         }
 
         if($preference_type->update($validated)){
-            session()->flash('status', ['success', "Preference type \"".$old_name."\" updated to \"".$preference_type->name."\"  successfully"]);
+            session()->flash('_status', ['success', "Preference type \"".$old_name."\" updated to \"".$preference_type->name."\"  successfully"]);
             return redirect()->back();
         }
 
-        session()->flash('status', ['error', "unknown error occured"]);
+        session()->flash('_status', ['error', "unknown error occured"]);
         return redirect()->back();
     }
 
 
     /**
-     * Remove the specified preference from storage.
+     * Remove the specified preference type from storage.
      *
      * @param  int  $id
      * @return RedirectResponse|Response
@@ -124,7 +111,7 @@ class PreferenceTypesController extends Controller
 
         }catch (ModelNotFoundException $e){
             // show failure
-            session()->flash('status', ['error', "Preference type with id ".$id." was not found"]);
+            session()->flash('_status', ['error', "Preference type with id ".$id." was not found"]);
             return redirect()->back();
 
         }
@@ -132,11 +119,11 @@ class PreferenceTypesController extends Controller
         // delete preference
         if($preference_type->delete()){
             // show success
-            session()->flash('status', ['success', "Preference type \"".$preference_type->name."\" has been deleted successfully"]);
+            session()->flash('_status', ['success', "Preference type \"".$preference_type->name."\" has been deleted successfully"]);
             return redirect()->back();
         }
 
-        session()->flash('status', ['error', "unknown error occured"]);
+        session()->flash('_status', ['error', "unknown error occured"]);
         return redirect()->back();
 
     }

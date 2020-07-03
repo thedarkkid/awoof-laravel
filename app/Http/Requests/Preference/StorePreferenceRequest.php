@@ -24,7 +24,8 @@ class StorePreferenceRequest extends FormRequest
     public function rules()
     {
         return [
-            "preference_type_id"
+            "preference_type_id" => "integer|required",
+            "name" => "string|required"
         ];
     }
 }

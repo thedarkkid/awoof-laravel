@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title', 'Preference Types')
+@section('title', 'Stores')
 @section('parentPageTitle', 'App')
 @section('page-style')
     <link rel="stylesheet" href="{{asset('assets/plugins/footable-bootstrap/css/footable.bootstrap.min.css')}}" />
@@ -8,7 +8,7 @@
 @section('content')
     <div class="row clearfix">
         <div class="col-lg-12 align-right pr-5">
-            <a href="{{route('preferences.types.create')}}" class="btn btn-primary btn-sm text-uppercase"><i class="zmdi zmdi-plus"></i> Add New</a>
+            <button data-toggle="modal" data-target="#addModal" class="btn btn-primary btn-sm text-uppercase"><i class="zmdi zmdi-plus"></i> Add New</button>
         </div>
         <div class="col-lg-12">
             <div class="card">
@@ -17,46 +17,47 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Preference Type</th>
-                            <th data-breakpoints="xs sm md">Created At</th>
+                            <th>Store</th>
+                            <th data-breakpoints="xs sm md">Created by</th>
                             <th data-breakpoints="xs">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($preference_types as $preference_type)
+                        @foreach($preferences as $preference)
                             <tr>
                                 <td>
                                     <div class="checkbox">
-                                        <input id="delete_{{$preference_type->id}}" value="{{$preference_type->id}}" name="delete_preference" type="checkbox">
-                                        <label for="delete_{{$preference_type->id}}">&nbsp;</label>
+                                        <input id="delete_{{$preference->id}}" value="{{$preference->id}}" name="delete_preference" type="checkbox">
+                                        <label for="delete_{{$preference->id}}">&nbsp;</label>
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="text-capitalize">{{$preference_type->name}}</span>
+                                    <span class="text-capitalize">{{$preference->name}}</span>
                                 </td>
                                 <td>
-                                    <span class="">{{$preference_type->created_at}}</span>
+                                    <span class="">{{$preference->created_at}}</span>
                                 </td>
                                 <td>
-                                    <button data-toggle="modal" data-target="#editModal{{$preference_type->id}}" class="btn btn-primary btn-sm"><i class="zmdi zmdi-edit"></i></button>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#defaultModal{{$preference_type->id}}" data-color="red"><i class="zmdi zmdi-delete"></i></button>
+                                    <button data-toggle="modal" data-target="#editModal{{$preference->id}}" class="btn btn-primary btn-sm"><i class="zmdi zmdi-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#defaultModal{{$preference->id}}" data-color="red"><i class="zmdi zmdi-delete"></i></button>
                                 </td>
-                                <div class="modal fade " id="editModal{{$preference_type->id}}" tabindex="-1" role="dialog">
+                                <div class="modal fade " id="editModal{{$preference->id}}" tabindex="-1" role="dialog">
                                     <div class="modal-dialog align-self-center mt-vh-33" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="title text-danger text-uppercase text-center" id="defaultModalLabel">{{__('Edit '.$preference_type->name)}}</h4>
+                                                <h4 class="title text-danger text-uppercase text-center" id="defaultModalLabel">{{__('Edit '.$preference->name)}}</h4>
                                             </div>
-                                            <form action="{{route('preferences.types.update', $preference_type->id)}}" method="POST" class="d-inline">
+                                            <form action="{{route('preferences.stores.update', $preference->id)}}" method="POST" class="d-inline">
                                                 @csrf
                                                 <div class="modal-body ">
                                                     <div class="form-group form-float">
-                                                        <input type="text" class="form-control" value="{{$preference_type->name}}" name="name" placeholder="Preference Type Name" required>
+                                                        <input type="text" class="form-control" value="{{$preference->name}}" name="name" placeholder="Preference Type Name" required>
                                                         @if ( $errors->has('name') )
                                                             <p class="text-danger">{{ $errors->first('name') }}</p>
                                                         @endif
                                                     </div>
                                                 </div>
+                                                <input type="hidden" name="preference_type_id" value="{{$preference_type_id}}">
                                                 <div class="modal-footer ">
                                                     <button type="button" class="btn btn-default waves-effect text-light text-uppercase" data-dismiss="modal">CLOSE</button>
                                                     <button type="submit" class="btn btn-primary waves-effect text-light text-uppercase">Save</button>
@@ -65,18 +66,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal fade " id="defaultModal{{$preference_type->id}}" tabindex="-1" role="dialog">
+                                <div class="modal fade " id="defaultModal{{$preference->id}}" tabindex="-1" role="dialog">
                                     <div class="modal-dialog align-self-center mt-vh-33" role="document">
                                         <div class="modal-content bg-warning">
                                             <div class="modal-header">
-                                                <h4 class="title text-danger text-uppercase text-center" id="defaultModalLabel">Are you sure you want to delete {{$preference_type->name }}?</h4>
+                                                <h4 class="title text-danger text-uppercase text-center" id="defaultModalLabel">Are you sure you want to delete {{$preference->name }}?</h4>
                                             </div>
                                             <div class="modal-body  text-light">
                                                 <p>A deleted preference type cannot be recovered and all relation to that preference will be deleted</p>
                                             </div>
                                             <div class="modal-footer ">
                                                 <button type="button" class="btn btn-default waves-effect text-light text-uppercase" data-dismiss="modal">CLOSE</button>
-                                                <form action="{{route('preferences.types.destroy', $preference_type->id)}}" method="POST" class="d-inline">
+                                                <form action="{{route('preferences.stores.destroy', $preference->id)}}" method="POST" class="d-inline">
                                                     @csrf
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <button type="submit" class="btn btn-danger waves-effect text-light text-uppercase">Delete</button>
@@ -91,8 +92,34 @@
                     </table>
                 </div>
             </div>
+            <div class="modal fade " id="addModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog align-self-center mt-vh-33" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="title text-danger text-uppercase text-center" id="defaultModalLabel">{{__('Add New Store')}}</h4>
+                        </div>
+                        <form id="form_advanced_validation" method="POST" action="{{ route('preferences.stores.store') }}">
+                            @csrf
+                            <div class="modal-body ">
+                                <div class="form-group form-float">
+                                    <input type="text" class="form-control" name="name" placeholder="Store Name" required>
+                                    @if ( $errors->has('name') )
+                                        <p class="text-danger">{{ $errors->first('name') }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <input type="hidden" name="preference_type_id" value="{{$preference_type_id}}">
+                            <div class="modal-footer ">
+                                <button type="button" class="btn btn-default waves-effect text-light text-uppercase" data-dismiss="modal">CLOSE</button>
+                                <button type="submit" class="btn btn-success waves-effect text-light text-uppercase">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 @stop
 @section('page-script')
     <script src="{{asset('assets/bundles/footable.bundle.js')}}"></script>

@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @if ( Session::has('status') )
-                <div class="alert alert-block alert-{{ Session::get('status')[0] }}">
+            @if ( Session::has('_status') )
+                <div class="alert alert-block alert-{{ Session::get('_status')[0] }}">
                     <div class="row">
                         <div class="col-11">
                             <p class="m-0">
-                                {{ Session::get('status')[1] }}
+                                {{ Session::get('_status')[1] }}
                             </p>
                         </div>
                         <div class="col-1">
