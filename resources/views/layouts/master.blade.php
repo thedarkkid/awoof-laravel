@@ -75,18 +75,8 @@
     <!-- GO TO TOP End -->
 </div>
 <!-- Wrap End -->
-<script src="{{ asset('assets/sebian/') }}/js/jquery-1.11.3.js"></script>
-<script src="{{ asset('assets/sebian/') }}/js/wow.min.js"></script>
-<script src="{{ asset('assets/sebian/') }}/js/bootstrap.min.js"></script>
-<script src="{{ asset('assets/sebian/') }}/js/own-menu.js"></script>
-<script src="{{ asset('assets/sebian/') }}/js/owl.carousel.min.js"></script>
-<script src="{{ asset('assets/sebian/') }}/js/jquery.magnific-popup.min.js"></script>
-<script src="{{ asset('assets/sebian/') }}/js/jquery.flexslider-min.js"></script>
-<script src="{{ asset('assets/sebian/') }}/js/jquery.isotope.min.js"></script>
-
-<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
-<script type="text/javascript" src="{{ asset('assets/sebian/') }}/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-<script type="text/javascript" src="{{ asset('assets/sebian/') }}/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-<script src="{{ asset('assets/sebian/') }}/js/main.js"></script>
+    <script src="{{ asset('assets/sebian/') }}/js/jquery-1.11.3.js"></script>
+    <script src="{{ asset('assets/sebian/') }}/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets/sebian/') }}/js/own-menu.js"></script>
 </body>
 </html>

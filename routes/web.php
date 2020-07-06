@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('search');
-});
-
 Auth::routes();
 
 /*
@@ -26,7 +22,11 @@ Auth::routes();
 |
 |
 */
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/test', function (){
+//    return view('auth.passwords.confirm');
+//});
+
+Route::get('/', 'SearchController@index')->name('home');
 
 /*
 |--------------------------------------------------------------------------

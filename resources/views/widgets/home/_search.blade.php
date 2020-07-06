@@ -1253,4 +1253,76 @@
         </nav>
     </div>
 </div>
+n +
+<!-- ==== LOGIN ======-->
+<section class="section-p-30px conact-us no-padding-b animate fadeInUp" data-wow-delay="0.4s">
+    <!--======= CONTACT FORM =========-->
+    <div class="container">
+    <!-- Tittle -->
+    <div class="tittle">
+        <h5>CONTACT US</h5>
+        <p>Please don’t hesitate to contact me if you have any questions, commnets or messages. <br>
+            I’ll try to respond to everything!</p>
+    </div>
+    <div class="contact section-p-30px no-padding-b">
+        <div class="contact-form">
+            <!--======= FORM  =========-->
+            <form role="form" id="contact_form" class="contact-form" method="post" onSubmit="return false">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="row">
+                            <li class="col-sm-12">
+                                <label>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="*NAME">
+                                </label>
+                            </li>
+                            <li class="col-sm-12">
+                                <label>
+                                    <input type="text" class="form-control" name="email" id="email" placeholder="*EMAIL">
+                                </label>
+                            </li>
+                            <li class="col-sm-12">
+                                <label>
+                                    <input type="text" class="form-control" name="company" id="company" placeholder="WEBSITE">
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="row">
+                            <li class="col-sm-12">
+                                <label>
+                                    <input type="text" class="form-control" name="website" id="website" placeholder="SUBJECT">
+                                </label>
+                            </li>
+                            <li class="col-sm-12">
+                                <label>
+                                    <textarea class="form-control" name="message" id="message" rows="5" placeholder="*MESSAGE"></textarea>
+                                </label>
+                            </li>
+                            <li class="col-sm-12 no-margin">
+                                <button type="submit" value="submit" class="btn" id="btn_submit" onClick="proceed();">SEND MESSAGE</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+<!-- ==== JS ===== -->
+<script src="{{ asset('assets/sebian/') }}/js/jquery-1.11.3.js"></script>
+<script src="{{ asset('assets/sebian/') }}/js/wow.min.js"></script>
+<script src="{{ asset('assets/sebian/') }}/js/bootstrap.min.js"></script>
+<script src="{{ asset('assets/sebian/') }}/js/own-menu.js"></script>
+<script src="{{ asset('assets/sebian/') }}/js/owl.carousel.min.js"></script>
+<script src="{{ asset('assets/sebian/') }}/js/jquery.magnific-popup.min.js"></script>
+<script src="{{ asset('assets/sebian/') }}/js/jquery.flexslider-min.js"></script>
+<script src="{{ asset('assets/sebian/') }}/js/jquery.isotope.min.js"></script>
+
+<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+<script type="text/javascript" src="{{ asset('assets/sebian/') }}/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+<script type="text/javascript" src="{{ asset('assets/sebian/') }}/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+<script src="{{ asset('assets/sebian/') }}/js/main.js"></script>
 
