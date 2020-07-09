@@ -96,7 +96,7 @@
                 <div class="modal-dialog align-self-center mt-vh-33" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="title text-danger text-uppercase text-center" id="defaultModalLabel">{{__('Add New Store')}}</h4>
+                            <h4 class="title text-danger text-uppercase text-center" id="defaultModalLabel">{{__('Add New Shopping Priority')}}</h4>
                         </div>
                         <form id="form_advanced_validation" method="POST" action="{{ route('preferences.shopping_priorities.store') }}">
                             @csrf
