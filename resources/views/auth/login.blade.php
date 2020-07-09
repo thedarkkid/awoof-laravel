@@ -10,8 +10,8 @@
                 <div class="contact-form">
                     <form method="POST" role="form" id="contact_form" class="contact-form" action="{{ route('login') }}">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-12">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 ">
                                 <ul class="row">
                                     <li class="col-sm-12 form-group">
                                         <label for="email" >

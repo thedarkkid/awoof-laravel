@@ -27,7 +27,11 @@ Auth::routes();
 //});
 
 Route::get('/', 'SearchController@index')->name('home');
+Route::get('/single_product', 'SearchController@single_product')->name('search.single_product');
+Route::get('/result', 'SearchController@result')->name('search.result');
+//Route::get('/{search_id}/{product_id}', 'SearchController@single_product')->name('search.single_product');
 
+Route::get('/preferences/stores', 'PreferenceController@store_preference');
 /*
 |--------------------------------------------------------------------------
 | Admin Routes

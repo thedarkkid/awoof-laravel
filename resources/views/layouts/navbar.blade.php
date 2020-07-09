@@ -6,16 +6,16 @@
             <div class="menu-toggle"> <i class="fa fa-bars"> </i> </div>
             <ul class="ownmenu">
                 <li class=" text-uppercase active">
-                    <a href="index.html">home</a>
+                    <a href="#">home</a>
                 </li>
                 <li class="text-uppercase">
-                    <a href="12-contact.html" >pages</a>
+                    <a href="#" >pages</a>
                 </li>
                 <li class="text-uppercase">
-                    <a href="12-contact.html" >pages</a>
+                    <a href="#" >pages</a>
                 </li>
                 <li class="text-uppercase">
-                    <a href="12-contact.html" >shop</a>
+                    <a href="#" >shop</a>
                 </li>
             @auth
                 <li class="search-nav">

@@ -24,10 +24,10 @@
 
     <!-- ADD YOUR OWN STYLING HERE. AVOID TO USE STYLE.CSS AND MAIN.CSS. IT WILL BE HELPFUL FOR YOU IN FUTURE UPDATES -->
     <link href="{{ asset('assets/sebian/') }}/css/custom.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/sebian/') }}/rs-plugin/css/settings.css" media="screen" />
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- JavaScripts -->
     <script src="{{ asset('assets/sebian/') }}/js/modernizr.js"></script>
@@ -41,6 +41,8 @@
 
 </head>
 <body>
+@yield('extrastyles')
+
 @yield('preloader')
 
 <!-- Page Wrap -->
@@ -78,5 +80,6 @@
     <script src="{{ asset('assets/sebian/') }}/js/jquery-1.11.3.js"></script>
     <script src="{{ asset('assets/sebian/') }}/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets/sebian/') }}/js/own-menu.js"></script>
+    @yield('extrascripts')
 </body>
 </html>
