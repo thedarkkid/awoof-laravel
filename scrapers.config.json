@@ -1,0 +1,100 @@
+{
+    "jumia": {
+        "baseURI": "https://www.jumia.com.ng",
+        "searchSegment" : "/catalog/?q=",
+        "parentDOM": "div[data-catalog] article.prd",
+        "extractables" : [
+            {
+                "variable": "link",
+                "source": "a.core",
+                "attribute": "href"
+            },
+            {
+                "variable": "img",
+                "source": "div.img-c > img.img",
+                "attribute": "data-src"
+            },
+            {
+                "variable": "name",
+                "source": "div.info > h3.name",
+                "attribute": "_text"
+            },
+            {
+                "variable": "price",
+                "source": "div.info div.prc",
+                "attribute": "_text"
+            },
+            {
+                "variable": "rating_text",
+                "source": "div.info div.stars._s",
+                "attribute": "_text"
+            }
+        ]
+    },
+
+    "kara": {
+        "baseURI": "https://www.jumia.com.ng",
+        "searchSegment" : "/catalog/?q=",
+        "parentDOM": "div[data-catalog] article.prd",
+        "extractables" : [
+            {
+                "variable": "link",
+                "source": "a.core",
+                "attribute": "href"
+            },
+            {
+                "variable": "img",
+                "source": "div.img-c > img.img",
+                "attribute": "data-src"
+            },
+            {
+                "variable": "name",
+                "source": "div.info > h3.name",
+                "attribute": "_text"
+            },
+            {
+                "variable": "price",
+                "source": "div.info div.prc",
+                "attribute": "_text"
+            },
+            {
+                "variable": "rating_text",
+                "source": "div.info div.stars._s",
+                "attribute": "_text"
+            }
+        ]
+    },
+
+    "slot": {
+        "baseURI": "https://www.jumia.com.ng",
+        "searchSegment" : "/catalog/?q=",
+        "parentDOM": "div[data-catalog] article.prd",
+        "extractables" : [
+            {
+                "variable": "link",
+                "source": "a.core",
+                "attribute": "href"
+            },
+            {
+                "variable": "img",
+                "source": "div.img-c > img.img",
+                "attribute": "data-src"
+            },
+            {
+                "variable": "name",
+                "source": "div.info > h3.name",
+                "attribute": "_text"
+            },
+            {
+                "variable": "price",
+                "source": "div.info div.prc",
+                "attribute": "_text"
+            },
+            {
+                "variable": "rating_text",
+                "source": "div.info div.stars._s",
+                "attribute": "_text"
+            }
+        ]
+    }
+}

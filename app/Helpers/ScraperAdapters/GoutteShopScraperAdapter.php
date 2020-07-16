@@ -13,7 +13,7 @@ class GoutteShopScraperAdapter implements IScraperAdapter
     protected $baseURI;
     protected $searchSegment; // "/" inclusive
     protected $parentDOM;
-    protected $extractables; //["variable","source", "attribute"];
+    protected $extractables;
     protected $scraper;
 
     /**
@@ -87,14 +87,15 @@ class GoutteShopScraperAdapter implements IScraperAdapter
             $crawler->filter($this->parentDOM)->each(function($node)use(&$items){
                 $item = [];
                 foreach ($this->extractables as $extractable){
-                    $content = $node->filter($extractable["source"])->extract([$extractable["attribute"]]);
+                    $content = $node->filter($extractable->source)->extract([$extractable->attribute]);
                     if(!empty($content)){
-                        $item[$extractable["variable"]] = $content[0];
+                        $item[$extractable->variable] = $content[0];
                     };
                 }
+//                $this->prettyDump($item);
+
                 $item = $this->computeExtractables($item);
-                if(!is_null($item))$items[] = $item
-                ;
+                if(!is_null($item))$items[] = $item;
             });
         }catch (\InvalidArgumentException $e){}
 
@@ -103,7 +104,10 @@ class GoutteShopScraperAdapter implements IScraperAdapter
 
     private function computeExtractables(array $item){
         try {
-            $item['rating'] = explode(" ", $item['rating_text'])[0];
+            if($item['rating']){
+                $item['rating'] = explode(" ", $item['rating_text'])[0];
+            }
+            $item['link'] = $this->baseURI.$item["link"];
             return $item;
         }catch (\ErrorException $e){}
     }
