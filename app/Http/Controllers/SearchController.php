@@ -19,28 +19,14 @@ class SearchController extends Controller
     private $kara_scraper_params;
 
     private $jumia_scraper;
-    private $konga_scraper;
+    private $slot_scraper;
     private $kara_scraper;
 
     public function __construct()
     {
-        // get the configuration to use scrapers
-        $scraper_file  = file_get_contents(base_path()."/scrapers.config.json");
-        $scraper_config= json_decode($scraper_file);
-
-        // utilise the scraper data
-        $this->jumia_scraper_params = $scraper_config->jumia;
-        $this->slot_scraper_params = $scraper_config->slot;
-        $this->kara_scraper_params = $scraper_config->kara;
-
-        // initialise scrapers
+        // initialise scrapers and scrapers parameters
+        $this->initialize_scrapers_params("/scrapers.config.json");
         $this->initialize_scrapers();
-    }
-
-    public function get_search_results(){
-        // display scraper data
-        $this->prettyDump($this->konga_scraper->search("black+shoe"));
-
     }
 
     public function index(){
@@ -56,10 +42,28 @@ class SearchController extends Controller
         return view('search.single_product');
     }
 
+    public function get_search_results(){
+        // display scraper data
+        $result = $this->search_and_extract("phone");
+        shuffle($result);
+        $this->prettyDump($result);
+    }
+
+    private function initialize_scrapers_params(string $param_file_path){
+        // get the configuration to use scrapers
+        $scraper_file  = file_get_contents(base_path().$param_file_path);
+        $scraper_config= json_decode($scraper_file);
+
+        // set scraper params to class properties
+        $this->jumia_scraper_params = $scraper_config->jumia;
+        $this->slot_scraper_params = $scraper_config->slot;
+        $this->kara_scraper_params = $scraper_config->kara;
+    }
+
     private function initialize_scrapers(){
         $this->initialize_jumia_scraper();
-        $this->initialize_konga_scraper();
-//        $this->initialize_kara_scraper();
+        $this->initialize_slot_scraper();
+        $this->initialize_kara_scraper();
     }
 
     private function initialize_jumia_scraper(){
@@ -103,4 +107,13 @@ class SearchController extends Controller
             $kara_scraper_config->extractables
         );
     }
+
+    private function search_and_extract(string $query){
+        $_jumia = $this->jumia_scraper->search($query);
+        $_slot = $this->slot_scraper->search($query);
+        $_kara = $this->kara_scraper->search($query);
+
+        return array_merge(array_merge($_jumia, $_slot), $_kara);
+    }
+
 }
