@@ -28,7 +28,7 @@ Auth::routes();
 
 Route::get('/', 'SearchController@index')->name('home');
 Route::get('/single_product', 'SearchController@single_product')->name('products.single_product');
-Route::get('/result', 'SearchController@result')->name('products.search.result');
+//Route::get('/result', 'SearchController@result')->name('products.search.result');
 
 Route::get('/search', 'SearchController@get_search_results')->name('products.search');
 

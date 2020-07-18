@@ -33,7 +33,7 @@
     <!--======= SUB BANNER =========-->
     <section class="sub-banner animate fadeInUp" data-wow-delay="0.4s">
         <div class="container">
-            <h4 class="text-uppercase">Results</h4>
+            <h4 class="text-uppercase">Results FOR {{$query}}</h4>
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
@@ -51,9 +51,15 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-8 no-padding  text-dark">
                         <div class="sub-mail">
-                            <form>
-                                <input class="black-box" type="search" placeholder="ENTER PRODUCT NAME, STORE, ETC">
-                                <!--  Button -->
+                            <form method="GET" action="{{ route('products.search') }}">
+                                <input class="black-box" value="{{$query}}" name="query" type="search" placeholder="ENTER PRODUCT NAME, STORE, ETC">
+                                @error('query')
+                                <div class="col-md-6 mt-vh-1">
+                                <span class="h5 text-danger" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                </div>
+                                @enderror
                                 <button class="text-uppercase" type="submit">search</button>
                             </form>
                         </div>
@@ -117,26 +123,37 @@
                     <div class="popurlar_product animate fadeInUp" data-wow-delay="0.4s">
                         <ul class="row">
                             <!-- Searched Products -->
-
+                            @foreach($products as $product)
                             <li class="col-sm-3 animate fadeIn" data-wow-delay="0.2s">
                                 <div class="items-in">
                                     <!-- Image -->
-                                    <img src="{{asset('assets/sebian')}}/images/new-item-1.jpg" alt="">
+                                    <img src="{{$product["img"]}}" alt="" >
                                     <!-- Hover Details -->
                                     <div class="over-item">
                                         <ul class="animated fadeIn">
-                                            <li> <a href="images/new-item-1.jpg" data-lighter><i class="ion-search"></i></a></li>
-                                            <li> <a href="#."><i class="ion-shuffle"></i></a></li>
-                                            <li> <a href="#."><i class="fa fa-heart-o"></i></a></li>
-                                            <li class="full-w"> <a href="#." class="btn">ADD TO CART</a></li>
+{{--                                            <li> <a href="images/new-item-1.jpg" data-lighter><i class="ion-search"></i></a></li>--}}
+{{--                                            <li> <a href="#."><i class="ion-shuffle"></i></a></li>--}}
+{{--                                            <li> <a href="#."><i class="fa fa-heart-o"></i></a></li>--}}
+                                            <li class="full-w"> <a href="{{$product["link"]}}" class="btn">View In Store</a></li>
                                             <!-- Rating Stars -->
-                                            <li class="stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i></li>
+                                            @if(array_key_exists("rating_text", $product))
+                                            <li class="stars">
+                                                @for($i=1; $i<=$product["rating"]; $i++)
+                                                    <i class="fa fa-star"></i>
+                                                @endfor
+                                            </li>
+                                            @endif
                                         </ul>
                                     </div>
                                     <!-- Item Name -->
-                                    <div class="details-sec"> <a href="#.">LOOSE-FIT TRENCH COAT</a> <span class="font-montserrat">129.00 USD</span> </div>
+                                    <div class="details-sec">
+                                        <a href="{{$product["link"]}}"> {{$product["name"]}} </a>
+                                        <span class="font-montserrat"> {{$product["price"]}} </span>
+                                    </div>
                                 </div>
                             </li>
+                            @endforeach
+
                         </ul>
                     </div>
 
@@ -160,8 +177,7 @@
     <script src="{{asset('assets/sebian')}}/js/owl.carousel.min.js"></script>
     <script src="{{asset('assets/sebian')}}/js/jquery.magnific-popup.min.js"></script>
     <script src="{{asset('assets/sebian')}}/js/jquery.isotope.min.js"></script>
-    <script src="{{asset('assets/sebian')}}/js/jquery.flexslider-min.js"></script>
-    <script src="{{asset('assets/sebian')}}/js/jquery.nouislider.min.js"></script>
+
 
     <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
     <script type="text/javascript" src="{{asset('assets/sebian')}}/rs-plugin/js/jquery.themepunch.tools.min.js"></script>

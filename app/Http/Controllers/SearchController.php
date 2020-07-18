@@ -9,6 +9,7 @@ use App\Traits\DisplayHelpers;
 use App\Traits\ScraperHelpers;
 use Illuminate\Http\Request;
 use Goutte\Client;
+use Illuminate\Pagination\LengthAwarePaginator;
 use stdClass;
 
 class SearchController extends Controller
@@ -39,6 +40,10 @@ class SearchController extends Controller
     }
 
     // todo implement cache system to store results
+    // todo add store image to individual result
+    // todo implement pagination correctly
+    // todo fix image loading problem
+
     public function single_product(){
         return view('search.single_product');
     }
@@ -47,7 +52,10 @@ class SearchController extends Controller
         // display scraper data
         $query = $request->validated()["query"];
         $result = $this->search_and_extract($query);
-        $this->prettyDump($result);
+
+        $_results = new LengthAwarePaginator($result, count($result), 10);
+//        $this->prettyDump($_results);
+        return view('search.result')->with(["products" => $_results, "query" => $query]);
     }
 
     private function initialize_scrapers_params(string $param_file_path){
@@ -110,8 +118,10 @@ class SearchController extends Controller
     }
 
     private function search_and_extract(string $query){
-        $_jumia = $this->jumia_scraper->search($query);
-        $_slot = $this->slot_scraper->search($query);
+//        $_jumia = $this->jumia_scraper->search($query);
+//        $_slot = $this->slot_scraper->search($query);
+        $_jumia = [];
+        $_slot = [];
         $_kara = $this->kara_scraper->search($query);
 
         $result = array_merge(array_merge($_jumia, $_slot), $_kara);
