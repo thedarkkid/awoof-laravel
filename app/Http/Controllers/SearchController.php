@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Scraper;
 use App\Helpers\ScraperAdapters\GoutteShopScraperAdapter;
+use App\Http\Requests\Search\SearchQueryRequest;
 use App\Traits\DisplayHelpers;
 use App\Traits\ScraperHelpers;
 use Illuminate\Http\Request;
@@ -42,10 +43,10 @@ class SearchController extends Controller
         return view('search.single_product');
     }
 
-    public function get_search_results(){
+    public function get_search_results(SearchQueryRequest $request){
         // display scraper data
-        $result = $this->search_and_extract("phone");
-        shuffle($result);
+        $query = $request->validated()["query"];
+        $result = $this->search_and_extract($query);
         $this->prettyDump($result);
     }
 
@@ -113,7 +114,10 @@ class SearchController extends Controller
         $_slot = $this->slot_scraper->search($query);
         $_kara = $this->kara_scraper->search($query);
 
-        return array_merge(array_merge($_jumia, $_slot), $_kara);
+        $result = array_merge(array_merge($_jumia, $_slot), $_kara);
+        shuffle($result);
+
+        return $result;
     }
 
 }

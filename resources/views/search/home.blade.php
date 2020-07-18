@@ -8,9 +8,15 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-8 no-padding  text-dark">
                     <div class="sub-mail">
-                        <form>
-                            <input class="black-box" type="search" placeholder="ENTER PRODUCT NAME, STORE, ETC">
-                            <!--  Button -->
+                        <form method="GET" action="{{ route('products.search') }}">
+                            <input class="black-box"  name="query" type="search" placeholder="ENTER PRODUCT NAME, STORE, ETC">
+                            @error('query')
+                            <div class="col-md-6 mt-vh-1">
+                                <span class="h5 text-danger" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            </div>
+                            @enderror
                             <button class="text-uppercase" type="submit">search</button>
                         </form>
                     </div>

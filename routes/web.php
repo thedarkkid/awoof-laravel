@@ -27,12 +27,14 @@ Auth::routes();
 //});
 
 Route::get('/', 'SearchController@index')->name('home');
-Route::get('/single_product', 'SearchController@single_product')->name('search.single_product');
-Route::get('/result', 'SearchController@result')->name('search.result');
-//Route::get('/{search_id}/{product_id}', 'SearchController@single_product')->name('search.single_product');
+Route::get('/single_product', 'SearchController@single_product')->name('products.single_product');
+Route::get('/result', 'SearchController@result')->name('products.search.result');
 
-Route::get('/search', 'SearchController@get_search_results');
-Route::get('/preferences/stores', 'PreferenceController@store_preference');
+Route::get('/search', 'SearchController@get_search_results')->name('products.search');
+
+//Route::get('/preferences/stores', 'PreferenceController@store_preference')->name('preferences.stores');
+//Route::get('/preferences/stores', 'PreferenceController@store_preference')->name('preferences.stores');
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
