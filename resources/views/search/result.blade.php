@@ -36,8 +36,8 @@
             <h4 class="text-uppercase">Results FOR {{$query}}</h4>
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li class="active">SHOP</li>
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li class="active">Search</li>
             </ol>
         </div>
     </section>
@@ -79,41 +79,31 @@
                     <div class="items-short-type animate fadeInUp" data-wow-delay="0.4s">
 
                         <!--======= GRID LIST STYLE =========-->
-                        <div class="grid-list"> <a href="#."><i class="fa fa-th-large"></i></a> <a href="#."><i class="fa fa-th-list"></i></a> </div>
+{{--                        <div class="grid-list"> <a href="#."><i class="fa fa-th-large"></i></a> <a href="#."><i class="fa fa-th-list"></i></a> </div>--}}
 
                         <!--======= SHORT BY =========-->
                         <div class="short-by">
-                            <select class="selectpicker">
-                                <option>Short by</option>
-                                <option>Short by</option>
-                            </select>
-                            <p>Showing 1-12 of 30 products</p>
+{{--                            <select class="selectpicker">--}}
+{{--                                <option>Short by</option>--}}
+{{--                                <option>Short by</option>--}}
+{{--                            </select>--}}
+                            <p>Showing {{$products->firstItem()}}-{{$products->lastItem()}} of {{$products->total()}} products</p>
                         </div>
 
                         <!--======= VIEW ITEM NUMBER =========-->
                         <div class="view-num">
                             <div class="short-by">
+                                <p class="mr-5">Sort By</p>
+
                                 <select class="selectpicker">
-                                    <option>By Price</option>
-                                    <option>100$ - 200$</option>
-                                    <option>100$ - 200$</option>
-                                    <option>100$ - 200$</option>
-                                    <option>100$ - 200$</option>
-                                    <option>100$ - 200$</option>
+                                    <option>Price</option>
+                                    <option>Highest to Lowest</option>
+                                    <option>Lowest to Highest</option>
                                 </select>
                                 <select class="selectpicker">
-                                    <option>By Color</option>
-                                    <option>RED</option>
-                                    <option>BLUE</option>
-                                    <option>GREEN</option>
-                                    <option>YELLOW</option>
-                                </select>
-                                <select class="selectpicker">
-                                    <option>By Size</option>
-                                    <option>Small</option>
-                                    <option>Large </option>
-                                    <option>X Large</option>
-                                    <option>XX Large</option>
+                                    <option>Rating</option>
+                                    <option>Highest to Lowest</option>
+                                    <option>Lowest to Highest</option>
                                 </select>
                             </div>
                         </div>
@@ -156,16 +146,7 @@
 
                         </ul>
                     </div>
-
-                    <!--======= PAGINATION =========-->
-                    <ul class="pagination animate fadeInUp" data-wow-delay="0.4s">
-                        <li><a href="#.">1</a></li>
-                        <li><a href="#.">2</a></li>
-                        <li><a href="#.">3</a></li>
-                        <li><a href="#.">4</a></li>
-                        <li><a href="#.">5</a></li>
-                        <li><a href="#."><i class="fa fa-angle-right"></i></a></li>
-                    </ul>
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>
