@@ -51,7 +51,7 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-8 no-padding  text-dark">
                         <div class="sub-mail">
-                            <form method="GET" action="{{ route('products.search') }}">
+                            <form method="GET" action="{{ route('user.products.search') }}">
                                 <input class="black-box" value="{{$query}}" name="query" type="search" placeholder="ENTER PRODUCT NAME, STORE, ETC">
                                 @error('query')
                                 <div class="col-md-6 mt-vh-1">

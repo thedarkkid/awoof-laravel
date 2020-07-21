@@ -5,17 +5,12 @@
             <!-- MENU BUTTON RESPONSIVE -->
             <div class="menu-toggle"> <i class="fa fa-bars"> </i> </div>
             <ul class="ownmenu">
+                <li class="ml-vh-7"></li>
                 <li class=" text-uppercase active">
-                    <a href="#">home</a>
+                    <a href="{{route('user.home')}}">home</a>
                 </li>
                 <li class="text-uppercase">
-                    <a href="#" >pages</a>
-                </li>
-                <li class="text-uppercase">
-                    <a href="#" >pages</a>
-                </li>
-                <li class="text-uppercase">
-                    <a href="#" >shop</a>
+                    <a href="{{route('user.preferences.stores')}}" >Preferences</a>
                 </li>
             @auth
                 <li class="search-nav">

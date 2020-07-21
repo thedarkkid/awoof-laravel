@@ -2,15 +2,91 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ErrorHelper;
+use App\Models\Preference;
+use App\Models\PreferenceType;
+use App\Models\UserPreference;
+use App\Traits\DisplayHelpers;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class PreferenceController extends Controller
 {
-    public function store_preference(){
-        return view('preferences.store');
+    use DisplayHelpers;
+
+    protected $store_pt_id = null;
+    protected $shopping_priorities_pt_id = null;
+
+    public function __construct()
+    {
+        try {
+            $this->store_pt_id = PreferenceType::where('name', 'stores')->firstOrFail()->id;
+            $this->shopping_priorities_pt_id = PreferenceType::where('name', 'shopping priorities')->firstOrFail()->id;
+        }catch (ModelNotFoundException $e){}
     }
 
-    public function shopping_priorities_preference(){
+    public function stores_preferences(){
+        if(is_null($this->store_pt_id)){
+            return view('preferences.stores')
+                ->with(['pt-error' => ErrorHelper::pt_not_created("Store")]);
+        }
+
+        $current_stores = $this->get_user_preferences(Auth::id(), $this->store_pt_id);
+        $stores = Preference::where('preference_type_id', $this->store_pt_id)->get();
+
+        return view('preferences.stores')->with(['stores' => $stores, "current_stores" => $current_stores]);
+    }
+
+    public function create_or_update_stores_preferences(Request $request){
+        $user_id = $request->input('_user');
+        $stores = Preference::where('preference_type_id', $this->store_pt_id)->get();
+
+        foreach ($stores as $store){
+            try{
+                $user_preference = UserPreference::where(['preference_id' => $store->id, 'user_id' => $user_id])
+                    ->firstOrFail();
+                $user_preference->priority = ($request->has($store->name) && $request->input($store->name) == 'on') ? 1 : 0;
+                $user_preference->save();
+            }catch (ModelNotFoundException $e){
+                $user_preference = new UserPreference();
+                $user_preference->preference_id = $store->id;
+                $user_preference->priority = $request->has($store->name) ? 1 : 0;
+                $user_preference->user_id = $user_id;
+                $user_preference->save();
+            }
+        }
+
+        session()->flash('_status', ['success', "Store preferences updated successfully"]);
+        return redirect()->back();
+    }
+
+    public function shopping_priorities_preferences(){
+        if(is_null($this->shopping_priorities_pt_id)){
+            return view('preferences.shopping_priorities')
+                ->with(['pt_error' => ErrorHelper::pt_not_created("Shopping Priorities")]);
+        }
         return view('preferences.shopping_priorities');
+    }
+
+    public function create_or_update_shopping_priorities_preferences(){
+        echo "works";
+    }
+
+    private function get_user_preferences($user_id, $pt_id){
+        $user_preferences = [];
+
+        try{
+            Preference::where('preference_type_id', $pt_id)->firstOrFail();
+            $preferences = Preference::where('preference_type_id', $pt_id)->get();
+
+            foreach ($preferences as $preference){
+                $u_preference = UserPreference::where(['preference_id' => $preference->id, 'user_id' => $user_id])->firstOrFail();
+                $user_preferences[$preference->name] = $u_preference->priority;
+            }
+        }catch (ModelNotFoundException $e){ return $user_preferences;}
+
+        return $user_preferences;
     }
 }

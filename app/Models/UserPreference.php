@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserPreference extends Model
 {
-    protected $table = 'user_preference';
+    protected $table = 'user_preferences';
     protected $guarded = [];
 
     /**

@@ -8,10 +8,13 @@ use Illuminate\Http\Request;
 
 class SearchController extends ScrapeController
 {
+    // todo implement preferences
     // todo implement model for API data
     // todo implement cache system to store results
     // todo add store image to individual result
+    // todo fix admin/user login crossover
     // todo fix image loading problem
+    // todo make sure preference/preference types deletion also deletes relations
 
     public function __construct()
     {

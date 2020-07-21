@@ -67,6 +67,7 @@
 
     <!-- CONTENT START -->
     <div class="content min-vh-49 mt-vh-5 mb-vh-5">
+        @include('layouts.flash-message');
         @yield('content')
     </div>
 

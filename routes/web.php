@@ -22,18 +22,22 @@ Auth::routes();
 |
 |
 */
-//Route::get('/test', function (){
-//    return view('auth.passwords.confirm');
-//});
 
-Route::get('/', 'SearchController@index')->name('home');
-Route::get('/single_product', 'SearchController@single_product')->name('products.single_product');
-//Route::get('/result', 'SearchController@result')->name('products.search.result');
+Route::get('/', 'SearchController@index')->name('user.home');
+Route::get('/search', 'SearchController@get_search_results')->name('user.products.search');
 
-Route::get('/search', 'SearchController@get_search_results')->name('products.search');
+Route::prefix('/')->middleware(['auth'])->group(function () {
+    Route::get('/preferences/stores', 'PreferenceController@stores_preferences')
+        ->name('user.preferences.stores');
+    Route::post('/preferences/stores', 'PreferenceController@create_or_update_stores_preferences')
+        ->name('user.preferences.create_update_stores');
 
-//Route::get('/preferences/stores', 'PreferenceController@store_preference')->name('preferences.stores');
-//Route::get('/preferences/stores', 'PreferenceController@store_preference')->name('preferences.stores');
+    Route::get('/preferences/shopping_priorities', 'PreferenceController@shopping_priorities_preferences')
+        ->name('user.preferences.shopping_priorities');
+    Route::post('/preferences/shopping_priorities', 'PreferenceController@create_or_update_shopping_priorities_preferences')
+        ->name('user.preferences.create_update_shopping_priorities');
+});
+
 
 /*
 |--------------------------------------------------------------------------
