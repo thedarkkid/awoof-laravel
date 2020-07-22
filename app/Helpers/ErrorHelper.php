@@ -7,7 +7,7 @@ namespace App\Helpers;
 class ErrorHelper
 {
     public static function pt_not_created($pt){
-        return $pt." has not been created yet, contact admin if error persists.";
+        return $pt." have not been created yet, contact admin if error persists.";
     }
 
     public static function pt_non_existent($pt){

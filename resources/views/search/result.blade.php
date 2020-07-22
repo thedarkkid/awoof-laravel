@@ -36,7 +36,7 @@
             <h4 class="text-uppercase">Results FOR {{$query}}</h4>
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="{{ route('user.home') }}">Home</a></li>
                 <li class="active">Search</li>
             </ol>
         </div>
@@ -138,7 +138,17 @@
                                     <!-- Item Name -->
                                     <div class="details-sec">
                                         <a href="{{$product["link"]}}"> {{$product["name"]}} </a>
+                                        <span>
+                                            @if(array_key_exists("rating_text", $product))
+                                                <div class="stars">
+                                                    @for($i=1; $i<=$product["rating"]; $i++)
+                                                        <i class="fa fa-star"></i>
+                                                    @endfor
+                                                </div>
+                                            @endif
+                                        </span>
                                         <span class="font-montserrat"> {{$product["price"]}} </span>
+
                                     </div>
                                 </div>
                             </li>
