@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Helpers\Scraper;
 use App\Helpers\ScraperAdapters\GoutteShopScraperAdapter;
 use App\Traits\DisplayHelpers;
-use App\Traits\ScraperHelpers;
 use Illuminate\Http\Request;
 
 class ScrapeController extends Controller
