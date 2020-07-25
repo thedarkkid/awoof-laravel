@@ -4,7 +4,7 @@
 namespace App\Interfaces;
 
 
-interface ScraperModel
+interface IScraperModel
 {
     public function __construct(string $config_file_path = null, array $stores = null);
     public function set_config_file_path(string $config_file_path);

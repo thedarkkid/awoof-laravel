@@ -18,4 +18,11 @@ class UtilityHelper
         }
         return $merged;
     }
+
+    public static function sort_multi_array_by_key(array $array, string $key){
+        usort($array, function($a, $b) use($key) {
+            return $a[$key] <=> $b[$key];
+        });
+        return $array;
+    }
 }
