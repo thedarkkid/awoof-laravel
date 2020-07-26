@@ -44,29 +44,54 @@
 
     <!--======= SEARCH BAR =========-->
 
+
     <section class="section-p-30px pages-in">
         <div class="container">
-            <div class="row justify-content-center">
-                <section class="subcribe  fadeInUp bg-white" >
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8 no-padding  text-dark">
-                        <div class="sub-mail">
-                            <form method="GET" action="{{ route('user.products.search') }}">
-                                <input class="black-box" value="{{$query}}" name="query" type="search" placeholder="ENTER PRODUCT NAME, STORE, ETC">
-                                @error('query')
-                                <div class="col-md-6 mt-vh-1">
-                                <span class="h5 text-danger" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+            <form method="GET" action="{{ route('user.products.search') }}">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-6">
+                        <div class="items-short-type animate fadeInUp mb-vh-3" data-wow-delay="0.4s">
+                            <div class="view-num">
+                                <div class="short-by">
+                                    <p class="mr-5">Sort By</p>
+
+                                    <select class="selectpicker">
+                                        <option>Price</option>
+                                        <option>Highest to Lowest</option>
+                                        <option>Lowest to Highest</option>
+                                    </select>
+                                    <select class="selectpicker">
+                                        <option>Rating</option>
+                                        <option>Highest to Lowest</option>
+                                        <option>Lowest to Highest</option>
+                                    </select>
                                 </div>
-                                @enderror
-                                <button class="text-uppercase" type="submit">search</button>
-                            </form>
+                            </div>
                         </div>
-                        <div class="col-md-2"></div>
                     </div>
-                </section>
-            </div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row justify-content-center">
+                    <section class="subcribe  fadeInUp bg-white" >
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 no-padding  text-dark">
+                            <div class="sub-mail">
+                                    <input class="black-box" value="{{$query}}" name="query" type="search" placeholder="ENTER PRODUCT NAME, STORE, ETC">
+                                    @error('query')
+                                    <div class="col-md-6 mt-vh-1">
+                                    <span class="h5 text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    </div>
+                                    @enderror
+                                    <button class="text-uppercase" type="submit">search</button>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </section>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -77,35 +102,8 @@
                 <!--======= ITEMS =========-->
                 <div class="col-sm-12 animate fadeInUp" data-wow-delay="0.4s">
                     <div class="items-short-type animate fadeInUp" data-wow-delay="0.4s">
-
-                        <!--======= GRID LIST STYLE =========-->
-{{--                        <div class="grid-list"> <a href="#."><i class="fa fa-th-large"></i></a> <a href="#."><i class="fa fa-th-list"></i></a> </div>--}}
-
-                        <!--======= SHORT BY =========-->
                         <div class="short-by">
-{{--                            <select class="selectpicker">--}}
-{{--                                <option>Short by</option>--}}
-{{--                                <option>Short by</option>--}}
-{{--                            </select>--}}
                             <p>Showing {{$products->firstItem()}}-{{$products->lastItem()}} of {{$products->total()}} products</p>
-                        </div>
-
-                        <!--======= VIEW ITEM NUMBER =========-->
-                        <div class="view-num">
-                            <div class="short-by">
-                                <p class="mr-5">Sort By</p>
-
-                                <select class="selectpicker">
-                                    <option>Price</option>
-                                    <option>Highest to Lowest</option>
-                                    <option>Lowest to Highest</option>
-                                </select>
-                                <select class="selectpicker">
-                                    <option>Rating</option>
-                                    <option>Highest to Lowest</option>
-                                    <option>Lowest to Highest</option>
-                                </select>
-                            </div>
                         </div>
                     </div>
 
@@ -168,41 +166,26 @@
     <script src="{{asset('assets/sebian')}}/js/owl.carousel.min.js"></script>
     <script src="{{asset('assets/sebian')}}/js/jquery.magnific-popup.min.js"></script>
     <script src="{{asset('assets/sebian')}}/js/jquery.isotope.min.js"></script>
-
-
-    <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
-    <script type="text/javascript" src="{{asset('assets/sebian')}}/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-    <script type="text/javascript" src="{{asset('assets/sebian')}}/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
     <script src="{{asset('assets/sebian')}}/js/main.js"></script>
     <script>
-        jQuery(document).ready(function($) {
-
-            //  Price Filter ( noUiSlider Plugin)
-            $("#price-range").noUiSlider({
-                range: {
-                    'min': [ 0 ],
-                    'max': [ 1000 ]
-                },
-                start: [40, 940],
-                connect:true,
-                serialization:{
-                    lower: [
-                        $.Link({
-                            target: $("#price-min")
-                        })
-                    ],
-                    upper: [
-                        $.Link({
-                            target: $("#price-max")
-                        })
-                    ],
-                    format: {
-                        // Set formatting
-                        decimals: 2,
-                        prefix: '$'
+        function preloadImages(array) {
+            if (!preloadImages.list) {
+                preloadImages.list = [];
+            }
+            var list = preloadImages.list;
+            for (var i = 0; i < array.length; i++) {
+                var img = new Image();
+                img.onload = function() {
+                    var index = list.indexOf(this);
+                    if (index !== -1) {
+                        // remove image from the array once it's loaded
+                        // for memory consumption reasons
+                        list.splice(index, 1);
                     }
                 }
-            })
-        })
+                list.push(img);
+                img.src = array[i];
+            }
+        }
     </script>
 @endsection

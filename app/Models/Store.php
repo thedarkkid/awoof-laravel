@@ -6,6 +6,7 @@ use App\Helpers\Scraper;
 use App\Helpers\ScraperAdapters\GoutteShopScraperAdapter;
 use App\Helpers\UtilityHelper;
 use App\Interfaces\IScraperModel;
+use App\Traits\DisplayHelpers;
 use stdClass;
 
 /**
@@ -14,6 +15,7 @@ use stdClass;
  */
 class Store implements IScraperModel
 {
+    use DisplayHelpers;
     /**
      * @var string
      */
@@ -52,10 +54,12 @@ class Store implements IScraperModel
         // get the content of the file and convert it to an object.
         $scraper_file_content = file_get_contents(base_path().$this->config_file_path);
         $this->scraper_config = json_decode($scraper_file_content);
-
+        $this->store_scrapers = new stdClass();
         // set default preferences
-        if(!is_null($preferences) && key_exists("stores", $preferences)) $this->stores = $preferences["stores"];
-        if(!is_null($preferences) && key_exists("shopping_priorities", $preferences)) $this->shopping_priorities = $preferences["shopping_priorities"];
+        if(!is_null($preferences)){
+            if(key_exists("stores", $preferences) && !is_null($preferences["stores"])) $this->stores = $preferences["stores"];
+            if(key_exists("shopping_priorities", $preferences) && !is_null($preferences["shopping_priorities"])) $this->shopping_priorities = $preferences["shopping_priorities"];
+        }
 
         // set up individual scraper objects for all the stores based on the contents of the config file.
         $this->initialize_stores_scrapers($this->stores);
@@ -170,6 +174,10 @@ class Store implements IScraperModel
             $_results[$store_name] = $scraper->search($query);
         }
 
+        // merge resulting array and shuffle results.
+        $_results = UtilityHelper::merge_arrays(array_values($_results));
+        shuffle($_results);
+
         // return scraped data.
         return $_results;
     }
@@ -182,6 +190,13 @@ class Store implements IScraperModel
     protected function get_by_default_sps(string $query, object $scrapers = null){
         // get scraped data by query.
         $query_result= $this->get_by_query($query, $scrapers);
+
+//        $r = $this->sort_by_sps($query_result, $this->shopping_priorities);
+//        $this->prettyDump($this->shopping_priorities);
+//        echo "<br />";
+//        $this->prettyDump($query_result);
+//        echo "<br />";
+//        $this->prettyDump($r);
 
         // sort data by default shopping priorities.
         return $this->sort_by_sps($query_result, $this->shopping_priorities);

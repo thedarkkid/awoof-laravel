@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\Search\SearchQueryRequest;;
+
+use App\Models\PreferenceType;
+use App\Models\Store;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SearchController extends ScrapeController
 {
-    // todo implement model for API data
     // todo implement cache system to store results
+    // todo use computeExtractables to create sortable properties
     // todo add store image to individual result
-    // todo fix admin/user login crossover
     // todo fix image loading problem
     // todo make sure preference/preference types deletion also deletes relations
+    // todo fix admin/user login crossover
     // todo work on shopping priorities so it does not reset each time a new sp is added.
+
 
     public function __construct()
     {
@@ -33,13 +39,23 @@ class SearchController extends ScrapeController
         return view('search.single_product');
     }
 
-    public function get_search_results(SearchQueryRequest $request){
-        // display scraper data
-        $query = $request->validated()["query"];
-        $result = $this->search_and_extract($query);
 
+    public function get_search_results(SearchQueryRequest $request){
+        $query = $request->validated()["query"];
+
+        $default_store = new Store();
+
+        $preferences = $this->get_current_user_preferences();
+        $user_store = new Store(null, $preferences);
+
+        $auth = Auth::check();
+
+        $result = ($auth)? $user_store->get($query): $default_store->get($query);
+
+//        $this->prettyDump($result);
         $pagination = $this->get_pagination($request, $result);
         return view('search.result')->with(["products" => $pagination, "query" => $query]);
     }
+
 
 }

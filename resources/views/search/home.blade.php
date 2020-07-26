@@ -10,6 +10,7 @@
                     <div class="sub-mail">
                         <form method="GET" action="{{ route('user.products.search') }}">
                             <input class="black-box"  name="query" type="search" placeholder="ENTER PRODUCT NAME, STORE, ETC">
+
                             @error('query')
                             <div class="col-md-6 mt-vh-1">
                                 <span class="h5 text-danger" role="alert">
@@ -17,6 +18,7 @@
                                 </span>
                             </div>
                             @enderror
+
                             <button class="text-uppercase" type="submit">search</button>
                         </form>
                     </div>

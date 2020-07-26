@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ErrorHelper;
+use App\Traits\PreferencesHelper;
 use App\Models\Preference;
 use App\Models\PreferenceType;
 use App\Models\UserPreference;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PreferenceController extends Controller
 {
-    use DisplayHelpers;
+    use DisplayHelpers, PreferencesHelper;
 
     protected $store_pt_id = null;
     protected $shopping_priorities_pt_id = null;
@@ -50,7 +51,6 @@ class PreferenceController extends Controller
         $current_sp = $this->get_user_preferences(Auth::id(), $this->shopping_priorities_pt_id);
         $sp = Preference::where('preference_type_id', $this->shopping_priorities_pt_id)->get();
 
-//        $this->prettyDump($current_sp);
         return view('preferences.shopping_priorities')->with(["priorities" => $sp, "current_sp" => $current_sp ]);
     }
 
@@ -99,21 +99,6 @@ class PreferenceController extends Controller
         return redirect()->back();
     }
 
-    private function get_user_preferences($user_id, $pt_id){
-        $user_preferences = [];
 
-        try{
-            Preference::where('preference_type_id', $pt_id)->firstOrFail();
-            $preferences = Preference::where('preference_type_id', $pt_id)->get();
-
-            foreach ($preferences as $preference){
-                $u_preference = UserPreference::where(['preference_id' => $preference->id, 'user_id' => $user_id])->firstOrFail();
-                $user_preferences[$preference->name] = $u_preference->priority;
-            }
-        }catch (ModelNotFoundException $e){ return $user_preferences;}
-
-        asort($user_preferences);
-        return $user_preferences;
-    }
 
 }
