@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\Search\SearchQueryRequest;;
-
-use App\Models\PreferenceType;
 use App\Models\Store;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class SearchController extends ScrapeController
 {
@@ -25,6 +22,7 @@ class SearchController extends ScrapeController
     public function __construct()
     {
         parent::__construct();
+
     }
 
     public function index(){
@@ -40,6 +38,18 @@ class SearchController extends ScrapeController
     }
 
 
+//    public function get_search_results(SearchQueryRequest $request){
+//        $query = $request->validated()["query"];
+//
+//        $old_query = Cache::get("query", "null");
+//
+//        echo "old query ".$old_query."<br/>";
+//        echo "new query ".$query."<br/>";
+//
+//        Cache::put("query", $query, 86400);
+//
+//    }
+
     public function get_search_results(SearchQueryRequest $request){
         $query = $request->validated()["query"];
 
@@ -52,7 +62,6 @@ class SearchController extends ScrapeController
 
         $result = ($auth)? $user_store->get($query): $default_store->get($query);
 
-//        $this->prettyDump($result);
         $pagination = $this->get_pagination($request, $result);
         return view('search.result')->with(["products" => $pagination, "query" => $query]);
     }

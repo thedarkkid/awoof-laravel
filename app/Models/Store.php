@@ -7,6 +7,7 @@ use App\Helpers\ScraperAdapters\GoutteShopScraperAdapter;
 use App\Helpers\UtilityHelper;
 use App\Interfaces\IScraperModel;
 use App\Traits\DisplayHelpers;
+use Illuminate\Support\Facades\Cache;
 use stdClass;
 
 /**
@@ -41,6 +42,7 @@ class Store implements IScraperModel
      */
     protected object $cache;
 
+    public static int $storage_time = 86400;
     /**
      * Store constructor.
      * @param string|null $config_file_path
@@ -170,13 +172,32 @@ class Store implements IScraperModel
 
         // get scraped data using scrapers.
         $_results = [];
-        foreach ($_scrapers as $store_name => $scraper){
-            $_results[$store_name] = $scraper->search($query);
+        $_conc_stores = "";
+
+        // check if exists in cache then get from cache, if else, scrape.
+        if(Cache::has($query)){
+            $cache_data = Cache::get($query);
+            foreach ($_scrapers as $store_name => $scraper){
+                $_results[$store_name] = $cache_data[$store_name];
+                $_conc_stores .= $store_name;
+            }
+        }else{
+            foreach ($_scrapers as $store_name => $scraper){
+                $_results[$store_name] = $scraper->search($query);
+                $_conc_stores .= $store_name;
+            }
+            Cache::put($query, $_results, Store::$storage_time);
         }
 
+
         // merge resulting array and shuffle results.
-        $_results = UtilityHelper::merge_arrays(array_values($_results));
-        shuffle($_results);
+        if(Cache::has($query.$_conc_stores)){
+            $_results = Cache::get($query.$_conc_stores);
+        }else{
+            $_results = UtilityHelper::merge_arrays(array_values($_results));
+            shuffle($_results);
+            Cache::put($query.$_conc_stores, $_results, Store::$storage_time);
+        }
 
         // return scraped data.
         return $_results;
@@ -241,6 +262,7 @@ class Store implements IScraperModel
         // get shopping priorities.
         $_sps = $sps;
 
+        $this->prettyDump(json_encode($sps));
         // sort them so the one with the highest priority(smallest index) comes first.
         sort($_sps);
 
