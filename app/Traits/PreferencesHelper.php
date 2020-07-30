@@ -7,6 +7,7 @@ namespace App\Traits;
 use App\Models\Preference;
 use App\Models\UserPreference;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 trait PreferencesHelper
 {
@@ -35,5 +36,22 @@ trait PreferencesHelper
             $stores[] = $preference_name;
         }
         return $stores;
+    }
+
+    public function get_current_user_stores($store_pt_id){
+        try {
+            $user_preferences = [];
+            Preference::where('preference_type_id', $store_pt_id)->firstOrFail();
+            $preferences = Preference::where('preference_type_id', $store_pt_id)->get();
+
+            foreach ($preferences as $preference){
+                $u_preference = UserPreference::where(['preference_id' => $preference->id, 'user_id' => Auth::id()])->firstOrFail();
+                if($u_preference->priority > 0){
+                    $user_preferences[] = $preference->name;
+                }
+            }
+            return $user_preferences;
+        }catch (ModelNotFoundException $e){ return ["slot", "jumia", "kara"]; }
+
     }
 }

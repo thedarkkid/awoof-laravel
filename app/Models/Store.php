@@ -37,11 +37,10 @@ class Store implements IScraperModel
      * @var array|mixed
      */
     protected array $shopping_priorities = ["price" => 1, "ratings" => 2];
-    /**
-     * @var object
-     */
-    protected object $cache;
 
+    /**
+     * @var int
+     */
     public static int $storage_time = 86400;
     /**
      * Store constructor.
@@ -212,13 +211,6 @@ class Store implements IScraperModel
         // get scraped data by query.
         $query_result= $this->get_by_query($query, $scrapers);
 
-//        $r = $this->sort_by_sps($query_result, $this->shopping_priorities);
-//        $this->prettyDump($this->shopping_priorities);
-//        echo "<br />";
-//        $this->prettyDump($query_result);
-//        echo "<br />";
-//        $this->prettyDump($r);
-
         // sort data by default shopping priorities.
         return $this->sort_by_sps($query_result, $this->shopping_priorities);
     }
@@ -262,7 +254,6 @@ class Store implements IScraperModel
         // get shopping priorities.
         $_sps = $sps;
 
-        $this->prettyDump(json_encode($sps));
         // sort them so the one with the highest priority(smallest index) comes first.
         sort($_sps);
 
@@ -304,3 +295,4 @@ class Store implements IScraperModel
         return $this->sort_by_sps($result, $shopping_priorities);
     }
 }
+

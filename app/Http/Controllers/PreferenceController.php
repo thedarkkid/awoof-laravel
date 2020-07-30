@@ -41,7 +41,6 @@ class PreferenceController extends Controller
     }
 
 
-
     public function shopping_priorities_preferences(){
         if(is_null($this->shopping_priorities_pt_id)){
             return view('preferences.shopping_priorities')
@@ -76,6 +75,7 @@ class PreferenceController extends Controller
         session()->flash('_status', ['success', "Store preferences updated successfully"]);
         return redirect()->back();
     }
+
     public function create_or_update_shopping_priorities_preferences(Request $request){
         $user_id = $request->input('_user');
         $shopping_priorities = Preference::where('preference_type_id', $this->shopping_priorities_pt_id)->get();

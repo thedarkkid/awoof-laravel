@@ -27,10 +27,20 @@ class ScrapeController extends Controller
         return $this->get_user_preferences_by_id(Auth::id());
     }
 
+//    protected function get_user_preferences_by_id($id){
+//        // get list of user stores.
+//        $current_stores = $this->get_user_preferences($id, $this->store_pt_id);
+//        $stores = $this->get_stores_from_preferences($current_stores);
+//
+//        // get list of user shopping priorities.
+//        $shopping_priorities = $this->get_user_preferences($id, $this->shopping_priorities_pt_id);
+//        $sps = empty($shopping_priorities) ? null : $shopping_priorities;
+//
+//        return["stores" => $stores, "shopping_priorities" => $sps];
+//    }
     protected function get_user_preferences_by_id($id){
         // get list of user stores.
-        $current_stores = $this->get_user_preferences($id, $this->store_pt_id);
-        $stores = $this->get_stores_from_preferences($current_stores);
+        $stores = $this->get_current_user_stores($this->store_pt_id);
 
         // get list of user shopping priorities.
         $shopping_priorities = $this->get_user_preferences($id, $this->shopping_priorities_pt_id);

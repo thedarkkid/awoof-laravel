@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 
 class SearchController extends ScrapeController
 {
-    // todo implement cache system to store results
     // todo use computeExtractables to create sortable properties
     // todo add store image to individual result
     // todo fix image loading problem
@@ -36,19 +35,6 @@ class SearchController extends ScrapeController
     public function single_product(){
         return view('search.single_product');
     }
-
-
-//    public function get_search_results(SearchQueryRequest $request){
-//        $query = $request->validated()["query"];
-//
-//        $old_query = Cache::get("query", "null");
-//
-//        echo "old query ".$old_query."<br/>";
-//        echo "new query ".$query."<br/>";
-//
-//        Cache::put("query", $query, 86400);
-//
-//    }
 
     public function get_search_results(SearchQueryRequest $request){
         $query = $request->validated()["query"];
