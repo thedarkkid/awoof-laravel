@@ -20,17 +20,11 @@ class Scraper implements IScraper
 
     /**
      * Scraper constructor.
-     * @param null $_adapter
-     * @param null $baseURI
-     * @param null $searchSegment
-     * @param null $parentDOM
-     * @param null $extractables
+     * @param IScraperAdapter $adapter
      */
-    public function __construct($_adapter = null, $baseURI = null, $searchSegment = null, $parentDOM = null, $extractables = null)
+    public function __construct(IScraperAdapter $adapter)
     {
-        if ($_adapter){
-            $this->_adapter = new $_adapter($baseURI, $searchSegment, $parentDOM, $extractables);
-        }
+            $this->_adapter = $adapter;
     }
 
     /**

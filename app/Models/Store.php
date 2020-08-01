@@ -91,13 +91,11 @@ class Store implements IScraperModel
         $store_scraper_config = $this->scraper_config->{$store};
 
         // initialise scraper object with store scraper config data.
-        $this->store_scrapers->{$store} =  new Scraper(
-            GoutteShopScraperAdapter::class,
-            $store_scraper_config->baseURI,
-            $store_scraper_config->searchSegment,
-            $store_scraper_config->parentDOM,
-            $store_scraper_config->extractables
-        );
+        $scraper_Adapter = new GoutteShopScraperAdapter(
+            $store_scraper_config->baseURI,  $store_scraper_config->searchSegment,
+            $store_scraper_config->parentDOM,  $store_scraper_config->extractables);
+
+        $this->store_scrapers->{$store} =  new Scraper($scraper_Adapter);
     }
 
     /**
