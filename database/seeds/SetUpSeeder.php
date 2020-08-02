@@ -13,8 +13,11 @@ class SetUpSeeder extends Seeder
      */
     public function run()
     {
-        $store_pt = (new PreferenceType(["name" => "stores"]))->save();
-        $sp_pt = (new PreferenceType(["name" => "shopping priorities"]))->save();
+        $store_pt = new PreferenceType(["name" => "stores"]);
+        $store_pt->save();
+
+        $sp_pt = new PreferenceType(["name" => "shopping priorities"]);
+        $sp_pt->save();
 
         $jumia =  ( new Preference(["name" => "jumia", "preference_type_id" => $store_pt->id]))->save();
         $slot =  ( new Preference(["name" => "slot", "preference_type_id" => $store_pt->id]))->save();
