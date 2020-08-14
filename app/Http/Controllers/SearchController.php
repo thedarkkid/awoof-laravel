@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\UtilityHelper;
 use App\Http\Requests\Search\SearchQueryRequest;;
 use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
@@ -54,9 +55,10 @@ class SearchController extends ScrapeController
 
         $result = ($auth)? $user_store->get($query): $default_store->get($query);
 
-//        $this->prettyDump($result);
         $pagination = $this->get_pagination($request, $result);
-        return view('search.result')->with(["products" => $pagination, "query" => $query, "order" => $order]);
+        $imgs = UtilityHelper::return_image_array_from_results($result);
+
+        return view('search.result')->with(["products" => $pagination, "query" => $query, "order" => $order, "imgs" => $imgs]);
     }
 
 

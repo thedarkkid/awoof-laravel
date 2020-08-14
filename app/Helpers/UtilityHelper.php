@@ -36,4 +36,13 @@ class UtilityHelper
         return ucfirst($domain);
 
     }
+
+    public static function return_image_array_from_results(array $results){
+        $imgs = [];
+        foreach ($results as $result){
+            $imgs[] = $result["img"];
+        }
+
+        return $imgs;
+    }
 }

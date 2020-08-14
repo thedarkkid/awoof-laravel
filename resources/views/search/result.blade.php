@@ -119,9 +119,6 @@
                                     <!-- Hover Details -->
                                     <div class="over-item">
                                         <ul class="animated fadeIn">
-{{--                                            <li> <a href="images/new-item-1.jpg" data-lighter><i class="ion-search"></i></a></li>--}}
-{{--                                            <li> <a href="#."><i class="ion-shuffle"></i></a></li>--}}
-{{--                                            <li> <a href="#."><i class="fa fa-heart-o"></i></a></li>--}}
                                             <li class="full-w"> <a href="{{$product["link"]}}" class="btn">View In Store</a></li>
                                             <!-- Rating Stars -->
                                             @if(array_key_exists("rating_text", $product))
@@ -174,6 +171,22 @@
     <script src="{{asset('assets/sebian')}}/js/jquery.isotope.min.js"></script>
     <script src="{{asset('assets/sebian')}}/js/main.js"></script>
     <script>
+        function httpGetAsync(theUrl, callback) {
+            var xmlHttp = new XMLHttpRequest();
+
+            xmlHttp.onerror = function(){
+                console.log(theUrl+" error loading");
+            };
+
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) callback(xmlHttp.responseText);
+            };
+            xmlHttp.open("GET", theUrl, true); // true for asynchronous
+            xmlHttp.setRequestHeader("Referer", theUrl);
+            xmlHttp.setRequestHeader("Origin", theUrl);
+
+            xmlHttp.send(null);
+        }
         function preloadImages(array) {
             if (!preloadImages.list) {
                 preloadImages.list = [];
@@ -188,10 +201,18 @@
                         // for memory consumption reasons
                         list.splice(index, 1);
                     }
-                }
+                };
                 list.push(img);
                 img.src = array[i];
             }
         }
+        function preloadImagesAsync(array){
+            for(let i=0; i<array.length; i++){
+                let windoew = window.open(array[0],'_blank', 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=1000000, top=100000, width=100, height=100, visible=false', '');
+                if(windoew)windoew.close()
+            }
+        }
+
+        let imgs = @json($imgs);
     </script>
 @endsection
