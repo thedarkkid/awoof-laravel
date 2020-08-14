@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Cache;
 
 class SearchController extends ScrapeController
 {
-    // todo use computeExtractables to create sortable properties
-    // todo add store image to individual result
     // todo fix image loading problem
     // todo make sure preference/preference types deletion also deletes relations
     // todo fix admin/user login crossover
