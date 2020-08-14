@@ -37,19 +37,28 @@ class SearchController extends ScrapeController
     }
 
     public function get_search_results(SearchQueryRequest $request){
-        $query = $request->validated()["query"];
+        $form = $request->validated();
+        $query = $form["query"];
+
+        $order = Store::$default_order;
+
+        if(key_exists("price_order", $form)) $order['price'] = $form["price_order"];
+        if(key_exists("rating_order", $form)) $order['rating'] = $form["rating_order"];
 
         $default_store = new Store();
 
         $preferences = $this->get_current_user_preferences();
+        $preferences["order"] = $order;
+
         $user_store = new Store(null, $preferences);
 
         $auth = Auth::check();
 
         $result = ($auth)? $user_store->get($query): $default_store->get($query);
 
+//        $this->prettyDump($result);
         $pagination = $this->get_pagination($request, $result);
-        return view('search.result')->with(["products" => $pagination, "query" => $query]);
+        return view('search.result')->with(["products" => $pagination, "query" => $query, "order" => $order]);
     }
 
 

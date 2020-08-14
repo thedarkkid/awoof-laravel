@@ -24,7 +24,9 @@ class SearchQueryRequest extends FormRequest
     public function rules()
     {
         return [
-            "query" => "string|required"
+            "query" => "string|required",
+            "price_order" => "string",
+            "rating_order" => "string"
         ];
     }
 }

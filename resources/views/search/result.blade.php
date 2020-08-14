@@ -56,15 +56,15 @@
                                 <div class="short-by">
                                     <p class="mr-5">Sort By</p>
 
-                                    <select class="selectpicker">
+                                    <select name="price_order" class="selectpicker">
                                         <option>Price</option>
-                                        <option>Highest to Lowest</option>
-                                        <option>Lowest to Highest</option>
+                                        <option value="asc" {{ ($order["price"] == "asc")? "selected": "" }}>Highest to Lowest</option>
+                                        <option value="desc" {{ ($order["price"] == "desc")? "selected": "" }}>Lowest to Highest</option>
                                     </select>
-                                    <select class="selectpicker">
+                                    <select name="rating_order" class="selectpicker">
                                         <option>Rating</option>
-                                        <option>Highest to Lowest</option>
-                                        <option>Lowest to Highest</option>
+                                        <option value="desc" {{ ($order["rating"] == "desc")? "selected": "" }}>Highest to Lowest</option>
+                                        <option value="asc" {{ ($order["rating"] == "asc")? "selected": "" }}>Lowest to Highest</option>
                                     </select>
                                 </div>
                             </div>
@@ -133,6 +133,13 @@
                                             @endif
                                         </ul>
                                     </div>
+                                    <div class="details-sec">
+                                        <p class="text-uppercase">
+                                            <b>
+                                                {{$product["store_name"]}}
+                                            </b>
+                                        </p>
+                                    </div>
                                     <!-- Item Name -->
                                     <div class="details-sec">
                                         <a href="{{$product["link"]}}"> {{$product["name"]}} </a>
@@ -145,8 +152,7 @@
                                                 </div>
                                             @endif
                                         </span>
-                                        <span class="font-montserrat"> {{$product["price"]}} </span>
-
+                                        <span class="font-montserrat"> {{$product["_price"]}} </span>
                                     </div>
                                 </div>
                             </li>

@@ -4,6 +4,7 @@
 namespace App\Helpers\ScraperAdapters;
 
 
+use App\Helpers\UtilityHelper;
 use App\Interfaces\IScraperAdapter;
 use App\Traits\DisplayHelpers;
 use Goutte\Client;
@@ -154,11 +155,17 @@ class GoutteShopScraperAdapter implements IScraperAdapter
     private function computeExtractables(array $item){
         try {
             if(array_key_exists("rating_text", $item)){
-                $item['rating'] = explode(" ", $item['rating_text'])[0];
+                $item['rating'] = intval(explode(" ", $item['rating_text'])[0]);
+            }else{
+                $item['rating_text'] = "0 out of 5";
+                $item['rating'] = 0;
             }
             if(strpos($item["link"], "https://") === false){
                 $item['link'] = $this->baseURI.$item["link"];
             }
+            $item["store_name"] = UtilityHelper::return_store_name_from_URI($this->baseURI);
+            $item["_price"] = $item["price"];
+            $item["price"] = intval(preg_replace('/[^0-9]/', '', $item["price"]));
             return $item;
         }catch (\ErrorException $e){ return $item;}
     }

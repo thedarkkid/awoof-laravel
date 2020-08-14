@@ -36,8 +36,13 @@ class Store implements IScraperModel
     /**
      * @var array|mixed
      */
-    protected array $shopping_priorities = ["price" => 1, "ratings" => 2];
+    protected array $shopping_priorities = ["price" => 1, "rating" => 2];
 
+    /**
+     * @var array
+     */
+    public static array $default_order = ["price" => "asc", "rating" => "desc"];
+    private  array $order = ["price" => "asc", "rating" => "desc"];
     /**
      * @var int
      */
@@ -60,6 +65,7 @@ class Store implements IScraperModel
         if(!is_null($preferences)){
             if(key_exists("stores", $preferences) && !is_null($preferences["stores"])) $this->stores = $preferences["stores"];
             if(key_exists("shopping_priorities", $preferences) && !is_null($preferences["shopping_priorities"])) $this->shopping_priorities = $preferences["shopping_priorities"];
+            if(key_exists("order", $preferences) && !is_null($preferences["order"])  && !empty($preferences["order"])) $this->order = $preferences["order"];
         }
 
         // set up individual scraper objects for all the stores based on the contents of the config file.
@@ -175,7 +181,8 @@ class Store implements IScraperModel
         if(Cache::has($query)){
             $cache_data = Cache::get($query);
             foreach ($_scrapers as $store_name => $scraper){
-                $_results[$store_name] = $cache_data[$store_name];
+                if(key_exists($store_name, $cache_data)) $_results[$store_name] = $cache_data[$store_name];
+                else $_results[$store_name] = $_scrapers->{$store_name}->search($query);
                 $_conc_stores .= $store_name;
             }
         }else{
@@ -190,6 +197,7 @@ class Store implements IScraperModel
         // merge resulting array and shuffle results.
         if(Cache::has($query.$_conc_stores)){
             $_results = Cache::get($query.$_conc_stores);
+            shuffle($_results);
         }else{
             $_results = UtilityHelper::merge_arrays(array_values($_results));
             shuffle($_results);
@@ -246,21 +254,26 @@ class Store implements IScraperModel
     /**
      * @param array $result
      * @param array $sps
+     * @param array|null $order
      * @return array
      */
-    public function sort_by_sps(array $result, array $sps){
+    public function sort_by_sps(array $result, array $sps, array $order = null){
+        // get default order
+        if(is_null($order)) $order = $this->order;
+
         // get shopping priorities.
         $_sps = $sps;
 
         // sort them so the one with the highest priority(smallest index) comes first.
-        sort($_sps);
+        asort($_sps);
 
         // reverse sorted array so lowest priority comes first.
-        $sp_reversed = array_reverse($_sps, true);
+        $sp_reversed = array_reverse($_sps);
 
+//        $this->prettyDump($sp_reversed);
         // loop through result array and sort by priority with lowest priority sorts happening first.
         foreach ($sp_reversed as $sp_key => $sp_value){
-            $result = UtilityHelper::sort_multi_array_by_key($result, $sp_key);
+             $result = UtilityHelper::sort_multi_array_by_key($result, $sp_key, $order[$sp_key]);
         }
 
         // return result array sorted by shopping priorities.

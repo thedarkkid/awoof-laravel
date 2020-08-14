@@ -19,11 +19,21 @@ class UtilityHelper
         return $merged;
     }
 
-    public static function sort_multi_array_by_key(array $array, string $key){
-        usort($array, function($a, $b) use($key) {
-            if(key_exists($key, $a) && key_exists($key, $b)) return $a[$key] <=> $b[$key];
-            else return 0;
+    public static function sort_multi_array_by_key(array $array, string $key, string $order="desc"){
+        uasort($array, function($a, $b) use($key, $order) {
+            if($order == "desc") return $b[$key] <=> $a[$key];
+            else return $a[$key] <=> $b[$key];
         });
         return $array;
+    }
+
+    public static function return_store_name_from_URI(string $uri){
+        $domain = parse_url($uri)["host"];
+        $domain = str_ireplace('www.', '', $domain);
+        $domain = str_ireplace('.com', '', $domain);
+        $domain = str_ireplace('.ng', '', $domain);
+
+        return ucfirst($domain);
+
     }
 }
