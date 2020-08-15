@@ -170,49 +170,4 @@
     <script src="{{asset('assets/sebian')}}/js/jquery.magnific-popup.min.js"></script>
     <script src="{{asset('assets/sebian')}}/js/jquery.isotope.min.js"></script>
     <script src="{{asset('assets/sebian')}}/js/main.js"></script>
-    <script>
-        function httpGetAsync(theUrl, callback) {
-            var xmlHttp = new XMLHttpRequest();
-
-            xmlHttp.onerror = function(){
-                console.log(theUrl+" error loading");
-            };
-
-            xmlHttp.onreadystatechange = function() {
-                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) callback(xmlHttp.responseText);
-            };
-            xmlHttp.open("GET", theUrl, true); // true for asynchronous
-            xmlHttp.setRequestHeader("Referer", theUrl);
-            xmlHttp.setRequestHeader("Origin", theUrl);
-
-            xmlHttp.send(null);
-        }
-        function preloadImages(array) {
-            if (!preloadImages.list) {
-                preloadImages.list = [];
-            }
-            var list = preloadImages.list;
-            for (var i = 0; i < array.length; i++) {
-                var img = new Image();
-                img.onload = function() {
-                    var index = list.indexOf(this);
-                    if (index !== -1) {
-                        // remove image from the array once it's loaded
-                        // for memory consumption reasons
-                        list.splice(index, 1);
-                    }
-                };
-                list.push(img);
-                img.src = array[i];
-            }
-        }
-        function preloadImagesAsync(array){
-            for(let i=0; i<array.length; i++){
-                let windoew = window.open(array[0],'_blank', 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=1000000, top=100000, width=100, height=100, visible=false', '');
-                if(windoew)windoew.close()
-            }
-        }
-
-        let imgs = @json($imgs);
-    </script>
 @endsection

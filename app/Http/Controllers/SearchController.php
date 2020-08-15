@@ -44,7 +44,7 @@ class SearchController extends ScrapeController
         if(key_exists("price_order", $form)) $order['price'] = $form["price_order"];
         if(key_exists("rating_order", $form)) $order['rating'] = $form["rating_order"];
 
-        $default_store = new Store();
+        $default_store = new Store(null, ["order" => $order]);
 
         $preferences = $this->get_current_user_preferences();
         $preferences["order"] = $order;
@@ -56,9 +56,8 @@ class SearchController extends ScrapeController
         $result = ($auth)? $user_store->get($query): $default_store->get($query);
 
         $pagination = $this->get_pagination($request, $result);
-        $imgs = UtilityHelper::return_image_array_from_results($result);
 
-        return view('search.result')->with(["products" => $pagination, "query" => $query, "order" => $order, "imgs" => $imgs]);
+        return view('search.result')->with(["products" => $pagination, "query" => $query, "order" => $order]);
     }
 
 
