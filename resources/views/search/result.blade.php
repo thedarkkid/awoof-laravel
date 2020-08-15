@@ -139,7 +139,7 @@
                                     </div>
                                     <!-- Item Name -->
                                     <div class="details-sec">
-                                        <a href="{{$product["link"]}}"> {{$product["name"]}} </a>
+                                        <a href="{{$product["link"]}}" target="_blank"> {{$product["name"]}} </a>
                                         <span>
                                             @if(array_key_exists("rating_text", $product))
                                                 <div class="stars">
