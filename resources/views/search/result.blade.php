@@ -58,13 +58,13 @@
 
                                     <select name="price_order" class="selectpicker">
                                         <option>Price</option>
-                                        <option value="asc" {{ ($order["price"] == "asc")? "selected": "" }}>Highest to Lowest</option>
-                                        <option value="desc" {{ ($order["price"] == "desc")? "selected": "" }}>Lowest to Highest</option>
+                                        <option value="asc" {{ ($order["price"] == "asc")? "selected": "" }}>Lowest to highest</option>
+                                        <option value="desc" {{ ($order["price"] == "desc")? "selected": "" }}>Highest to lowest</option>
                                     </select>
                                     <select name="rating_order" class="selectpicker">
                                         <option>Rating</option>
-                                        <option value="desc" {{ ($order["rating"] == "desc")? "selected": "" }}>Highest to Lowest</option>
                                         <option value="asc" {{ ($order["rating"] == "asc")? "selected": "" }}>Lowest to Highest</option>
+                                        <option value="desc" {{ ($order["rating"] == "desc")? "selected": "" }}>Highest to Lowest</option>
                                     </select>
                                 </div>
                             </div>
