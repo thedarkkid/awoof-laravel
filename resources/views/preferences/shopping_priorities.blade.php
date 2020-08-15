@@ -14,6 +14,11 @@
     @else
         <form method="post" action="{{route('user.preferences.create_update_shopping_priorities')}}">
             @csrf
+            <div class="form-group mb-5">
+                <p class="form-text">Shopping priorites are the things <b>most important</b> to you while comparing products, they are listed in an order with the <b>most important before
+                        the less important</b>.
+                    The order of the shopping priorities will <b> be considered</b> whenever you search for a product and the results will be curated to reflect the order of these priorities.</p>
+            </div>
             <div class="list-group" id="sortable">
                 @if(!empty($current_sp))
                     @foreach($current_sp as $sp_name => $sp_priority)

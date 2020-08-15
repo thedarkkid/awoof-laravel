@@ -11,7 +11,9 @@
 
     <form method="POST" action="{{route('user.preferences.create_update_stores')}}">
         @csrf
-
+        <div class="form-group mb-2">
+            <p class="form-text">Select from the list the of stores you want the application to search your products from.</p>
+        </div>
         @foreach($stores as $store)
             <li class="ml-vh-2">
                 <div class="checkbox">
